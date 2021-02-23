@@ -2,19 +2,12 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Sistema de Notas</title>
-
+    
     <style>
-        /* tr:hover{
-            background-color: #bbbbbb;
-        }
-
-        tr, td {
-            border-collapse: collapse;
-            padding: 15px;
-            text-align: center;
-        } */
         * {
             box-sizing: border-box;
         }
@@ -86,18 +79,20 @@
             }
         }
     </style>
-
     <?php
+        include("./crud/gravarNota.php");
         include("restrito.php");
     ?>
+
 </head>
+
 <body>
-    <?php 
-        include("cabecario.php");
+    <?php
+        include ("cabecario.php");
     ?>
     <br><br><br>
     <div class="container">
-        <form action="relat.php" method="POST">
+        <form action="cadastroNota.php" method="POST">
             <div class="row">
                 <div class="col-25">
                     <label for="fname">Selecione o motorista:</label>
@@ -121,79 +116,22 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="lname">Data inicial</label>
+                    <label for="lname">Número da nota:</label>
                 </div>
                 <div class="col-25">
-                    <input type="date" id="dataini" name="dataini" require>
+                    <input type="text" id="nota" name="nota" placeholder="Digite o número da nota..." require>
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">Data final:</label>
+                    <label for="subject">Data da nota: </label>
                 </div>
                 <div class="col-25">
-                    <input type="date" id="datafim" name="datafim" require>
+                    <input type="date" id="data" name="data" placeholder="Data..." require>
                 </div>
             </div>
             <div class="row">
-                <input type="submit" value="Buscar">
-            </div>
-        </form>
-        <?php 
-            if(isset($_REQUEST["cod_moto"])){
-                global $id;
-                $id = $_REQUEST["cod_moto"];
-                
-                global $dataIni;
-                $dataIni = $_REQUEST["dataini"];
-                
-                global $dataFim;
-                $dataFim = $_REQUEST["datafim"];
-            }
-        ?>
-        <br><br><br>
-        <form>
-            <table border="1" cellspacing="0" cellpadding="5" align="center">
-                <thead>
-                    <tr>
-                        <td> NÚMERO DA NOTA </td>
-                        <td> MOTORISTA </td>
-                        <td> DATA </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        // Arquivo que faz conexão com o banco de dados
-                        include_once ("./crud/conexao.php");
-                        if(isset($_REQUEST["cod_moto"])){
-                            //Cria uma nova conexão
-                            $bd = new Conexao();
-                            $registro =  $bd->sql_query("select num_nota, nome_moto, data_nota from motorista, notas where motorista.cod_moto='$id' and motorista.cod_moto = notas.cod_moto and data_nota between '$dataIni' and '$dataFim';");	
-
-                            //Preenche a tabela com os dados existentes no banco de dados
-                            global $cont;
-                            $cont = 0;
-                            while ($res = mysql_fetch_array($registro) ) {
-                                echo "<tr>";
-                                    echo "<td>" . $res[0] . "</td>";
-                                    echo "<td>" . $res[1] . "</td>";
-                                    echo "<td>" . $res[2] . "</td>";
-                                echo "</tr>";
-                                $cont++;
-                            }
-                        }
-                        //unset($bd);
-                        //unset($registro);
-                    ?>
-                </tbody>
-            </table>
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Total de notas:</label>
-                </div>
-                <div class="col-25">
-                <input type="text" name="qtd" id="qtd" value="<?php echo $cont; ?>">
-                </div>
+                <input type="submit" value="Cadastrar">
             </div>
         </form>
     </div>

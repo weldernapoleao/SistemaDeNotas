@@ -1,0 +1,10 @@
+
+tr:hover{
+    background-color: #bbbbbb;
+}
+
+tr, td {
+    border-collapse: collapse;
+    padding: 15px;
+    text-align: center;
+}
